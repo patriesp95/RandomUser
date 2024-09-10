@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private fun initUI() {
         initListeners()
         initUIState()
+        handleLoadingState()
     }
 
     private fun initListeners() {
@@ -37,13 +38,26 @@ class MainActivity : AppCompatActivity() {
     private fun initUIState() {
         lifecycleScope.launch {
             randomUserViewModel.state.collect { result ->
-                binding.progressBar.isVisible = true
                 if (!result.isNullOrEmpty()) {
-                    binding.progressBar.isVisible = false
                     bindData(result)
                 }
             }
         }
+    }
+
+    private fun handleLoadingState(){
+        lifecycleScope.launch {
+            randomUserViewModel.loading.collect {
+                handleProgressBarBehaviour(it)
+            }
+        }
+    }
+
+    private fun handleProgressBarBehaviour(isLoading: Boolean) {
+            when(isLoading){
+                true -> binding.progressBar.isVisible = true
+                false -> binding.progressBar.isVisible = false
+            }
     }
 
     private fun bindData(result: List<RandomUserModel>) {
