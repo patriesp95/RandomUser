@@ -34,6 +34,8 @@ Install my project simply cloning it
 ## Screenshots
 ![Screenshot 2024-09-10 at 21 38 15](https://github.com/user-attachments/assets/3271671b-6392-49d3-8b6f-5c7f5f0a528f)
 ![Screenshot 2024-09-10 at 21 38 38](https://github.com/user-attachments/assets/d04b9331-3cf3-480a-818f-f906db5c6243)
+![Screenshot 2024-09-10 at 21 42 22](https://github.com/user-attachments/assets/2ad89937-60d6-4213-a082-869fff391dd8)
+
 
 ## Usage/Examples
 
