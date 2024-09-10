@@ -1,10 +1,9 @@
 package com.example.randomuserapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.randomuserapp.databinding.ActivityMainBinding
@@ -38,7 +37,9 @@ class MainActivity : AppCompatActivity() {
     private fun initUIState() {
         lifecycleScope.launch {
             randomUserViewModel.state.collect { result ->
-                if(!result.isNullOrEmpty()){
+                binding.progressBar.isVisible = true
+                if (!result.isNullOrEmpty()) {
+                    binding.progressBar.isVisible = false
                     bindData(result)
                 }
             }
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadImage(image: String) {
         Glide.with(this).load(image).into(binding.ivUser);
-
     }
 
 }
