@@ -39,5 +39,5 @@ Install my project simply cloning it
 
 ## Usage/Examples
 
-- First you will find a ConstraintLayout with images, names and locations featuring random user free API -> https://api.rawg.io/docs/
+- First you will find a ConstraintLayout with images, names and locations featuring random user free API -> https://randomuser.me/api/
 - Once you click in some in the main and only screen (MainActivity.kt) you will be displayed with a new user
