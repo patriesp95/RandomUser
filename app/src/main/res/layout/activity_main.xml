@@ -47,24 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Spain"/>
 
-    <Button
-        android:id="@+id/updateUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NEXT USER"
-        app:layout_constraintTop_toBottomOf="@id/tvCountry"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <Button
-        android:id="@+id/addUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD USER"
-        app:layout_constraintTop_toBottomOf="@id/updateUser"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -80,19 +62,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="ivUser, tvName, tvCountry, updateUser,addUser"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavView"
-        android:layout_width="0dp"
-        android:background="@color/primaryDark"
-        android:layout_height="wrap_content"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu"
-        />
+        app:constraint_referenced_ids="ivUser, tvName, tvCountry"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
