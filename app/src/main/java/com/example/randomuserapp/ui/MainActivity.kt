@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.mainContainer.setOnClickListener {
+        binding.updateUser.setOnClickListener {
             randomUserViewModel.getRandomUser()
         }
     }
