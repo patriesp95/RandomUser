@@ -1,6 +1,7 @@
 package com.example.randomuserapp.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -55,8 +56,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleProgressBarBehaviour(isLoading: Boolean) {
             when(isLoading){
-                true -> binding.progressBar.isVisible = true
-                false -> binding.progressBar.isVisible = false
+                true -> {
+                    binding.progressBar.isVisible = true
+                    binding.userData.visibility = View.GONE
+                }
+                false -> {
+                    binding.progressBar.isVisible = false
+                    binding.userData.visibility = View.VISIBLE
+                }
             }
     }
 
