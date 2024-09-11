@@ -8,10 +8,10 @@ In this project you will find
 - Dependency Injection using Dagger Hilt
 - Retrofit
 - Mappers
-- Corroutines
+- Coroutines
 
 ## 🚀 About Me
-I'm a young mobile developer mainly intered in Android although I am currently working as an iOS developer in worldwide travelling company eDreams Odigeo 🛩️
+I'm a young mobile developer mainly interested in Android although I am currently working as an iOS developer in worldwide travelling company eDreams Odigeo 🛩️
 
 
 ## 🔗 Links
