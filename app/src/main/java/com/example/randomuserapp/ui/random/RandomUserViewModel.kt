@@ -1,10 +1,11 @@
-package com.example.randomuserapp.ui
+package com.example.randomuserapp.ui.random
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.domain.usecase.GetRandomUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +27,7 @@ class RandomUserViewModel @Inject constructor(
     }
 
     fun getRandomUser() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _loading.value = true
             _state.value = getRandomUserUseCase()
             _loading.value = false

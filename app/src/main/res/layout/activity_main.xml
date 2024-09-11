@@ -5,63 +5,51 @@
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.home.MainActivity">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivUser"
-        app:shapeAppearanceOverlay="@style/circularImage"
-        app:strokeColor="#FFFFFF"
-        app:strokeWidth="8dp"
-        android:layout_margin="20dp"
-        android:padding="5dp"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:background="@color/red"
-        tools:strokeColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:theme="@style/name"
-        app:layout_constraintTop_toBottomOf="@+id/ivUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Patricia M Espert"/>
-
-    <TextView
-        android:id="@+id/tvCountry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:gravity="center"
-        android:theme="@style/country"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Spain"/>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:background="@color/primaryDark"
+        android:layout_width="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="?attr/actionBarSize">
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/userData"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            android:text="@string/app_name"/>
+
+    </FrameLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:navGraph="@navigation/nav_graph"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavView"
+        android:layout_width="0dp"
+        android:background="@color/primaryDark"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="ivUser, tvName, tvCountry"/>
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_bottom"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -22,6 +25,17 @@ object NetworkModule {
             .baseUrl("https://randomuser.me")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient
+            .Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(1, TimeUnit.MINUTES)
+            .build()
     }
 
     @Provides

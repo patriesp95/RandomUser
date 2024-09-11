@@ -6,4 +6,6 @@
     <color name="red">#F44336</color>
     <color name="primary">#009688</color>
     <color name="primaryDark">#01544E</color>
+    <color name="secondary">#2196F3</color>
+    <color name="terciary">#FFEB3B</color>
 </resources>
