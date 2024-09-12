@@ -1,6 +1,7 @@
 package com.example.randomuserapp.di
 
 import com.example.randomuserapp.data.RandomUserRepositoryImpl
+import com.example.randomuserapp.data.database.dao.RandomUserDao
 import com.example.randomuserapp.data.network.RandomUserApiService
 import com.example.randomuserapp.domain.RandomUserRepository
 import dagger.Module
@@ -44,7 +45,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideRandomUserRepository(apiService: RandomUserApiService):RandomUserRepository{
-        return RandomUserRepositoryImpl(apiService)
+    fun provideRandomUserRepository(apiService: RandomUserApiService, dao: RandomUserDao):RandomUserRepository{
+        return RandomUserRepositoryImpl(apiService, dao)
     }
 }

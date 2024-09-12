@@ -1,6 +1,7 @@
 package com.example.randomuserapp.ui.random
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.example.randomuserapp.databinding.FragmentRandomBinding
 import com.example.randomuserapp.domain.model.RandomUserModel
+import com.example.randomuserapp.ui.favorite.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RandomFragment : Fragment() {
     private val randomUserViewModel by viewModels<RandomUserViewModel>()
+    private val favoriteViewModel by viewModels<FavoriteViewModel>()
+
     private var _binding: FragmentRandomBinding? = null
     private val binding get() = _binding!!
 
@@ -58,6 +62,11 @@ class RandomFragment : Fragment() {
     private fun initListeners() {
         binding.btnNextUser.setOnClickListener {
             randomUserViewModel.getRandomUser()
+        }
+
+        binding.btnAddUser.setOnClickListener {
+            Log.d("patri","add user clicked")
+            favoriteViewModel.getFavoriteList()
         }
     }
 
