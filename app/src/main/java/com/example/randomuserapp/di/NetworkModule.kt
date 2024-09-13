@@ -2,6 +2,10 @@ package com.example.randomuserapp.di
 
 import com.example.randomuserapp.data.RandomUserRepositoryImpl
 import com.example.randomuserapp.data.database.dao.RandomUserDao
+import com.example.randomuserapp.data.datasource.favorite.local.FavoriteRandomUserLocalDataSource
+import com.example.randomuserapp.data.datasource.favorite.local.FavoriteRandomUserLocalDataSourceImpl
+import com.example.randomuserapp.data.datasource.random.remote.RandomUserRemoteDataSource
+import com.example.randomuserapp.data.datasource.random.remote.RandomUserRemoteDataSourceImpl
 import com.example.randomuserapp.data.network.RandomUserApiService
 import com.example.randomuserapp.domain.RandomUserRepository
 import dagger.Module
@@ -21,10 +25,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit():Retrofit{
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://randomuser.me")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build();
     }
 
@@ -45,7 +50,27 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideRandomUserRepository(apiService: RandomUserApiService, dao: RandomUserDao):RandomUserRepository{
-        return RandomUserRepositoryImpl(apiService, dao)
+    fun provideRandomUserRemoteDataSource(apiService: RandomUserApiService): RandomUserRemoteDataSource {
+        return RandomUserRemoteDataSourceImpl(
+            apiService
+        )
+    }
+
+    @Provides
+    fun provideFavoriteRandomUserLocalDataSource(dao: RandomUserDao): FavoriteRandomUserLocalDataSource {
+        return FavoriteRandomUserLocalDataSourceImpl(
+            dao
+        )
+    }
+
+    @Provides
+    fun provideRandomUserRepository(
+        randomUserRemoteDataSource: RandomUserRemoteDataSource,
+        favoriteRandomUserLocalDataSource: FavoriteRandomUserLocalDataSource
+    ): RandomUserRepository {
+        return RandomUserRepositoryImpl(
+            randomUserRemoteDataSource,
+            favoriteRandomUserLocalDataSource
+        )
     }
 }

@@ -6,15 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.randomuserapp.R
 import com.example.randomuserapp.domain.model.RandomUserModel
+import com.example.randomuserapp.ui.favorite.FavoriteViewModel
 
 class FavoriteAdapter(private var favoriteList: List<RandomUserModel> = emptyList(),
     private val myContext: Context) :
     RecyclerView.Adapter<FavoriteViewHolder>() {
-
-    fun updateList(list: List<RandomUserModel>) {
-        favoriteList = list
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         return FavoriteViewHolder(
