@@ -13,6 +13,7 @@ class FavoriteViewHolder(view: View, myContext: Context) : RecyclerView.ViewHold
     fun render(favoriteInfo: RandomUserModel, myContext: Context) {
         loadImage(favoriteInfo.image, myContext)
         binding.tvTitle.text = favoriteInfo.name
+        binding.tvCountry.text = favoriteInfo.country
     }
 
     private fun loadImage(image: String, myContext: Context) {
