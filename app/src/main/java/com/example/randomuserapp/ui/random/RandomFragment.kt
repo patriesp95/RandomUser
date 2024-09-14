@@ -1,10 +1,10 @@
 package com.example.randomuserapp.ui.random
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -55,10 +55,11 @@ class RandomFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.btnNextUser.setOnClickListener {
-            this.randomUserViewModel.getRandomUser()
-        }
+        nextUserFunctionality()
+        addUserFunctionality()
+    }
 
+    private fun addUserFunctionality() {
         binding.btnAddUser.setOnClickListener {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -67,6 +68,12 @@ class RandomFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    private fun nextUserFunctionality() {
+        binding.btnNextUser.setOnClickListener {
+            this.randomUserViewModel.getRandomUser()
         }
     }
 

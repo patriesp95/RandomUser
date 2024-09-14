@@ -10,4 +10,7 @@
     <!-- Random Fragment -->
     <string name="next">NEXT USER</string>
     <string name="add">ADD USER</string>
+
+    <!-- Favorite Fragment -->
+    <string name="filter">Filter by name</string>
 </resources>

@@ -1,18 +1,16 @@
 package com.example.randomuserapp.ui.favorite
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.randomuserapp.databinding.FragmentFavoriteBinding
+import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.ui.favorite.adapter.FavoriteAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,10 +28,29 @@ class FavoriteFragment : Fragment() {
         initUI()
     }
 
-    private fun initUI(){
+    private fun initUI() {
+        initFilter()
         initFavoriteList()
         updateList()
     }
+
+    private fun initFilter() {
+        binding.etFilter.addTextChangedListener {
+            lifecycleScope.launch {
+                favoriteViewModel.favoriteState.collect { favoriteState ->
+                    val filteredList = favoriteState.favoritesUserList.filter { user ->
+                        user.name.contains(it.toString())
+                    }
+                    enableFilteredList(filteredList)
+                }
+            }
+        }
+    }
+
+    private fun enableFilteredList(randomUserList: List<RandomUserModel>) {
+        favoriteAdapter.updateList(randomUserList)
+    }
+
 
     private fun initFavoriteList() {
         favoriteAdapter = FavoriteAdapter(emptyList(), requireContext())
@@ -45,7 +62,7 @@ class FavoriteFragment : Fragment() {
 
     private fun updateList() {
         lifecycleScope.launch {
-            favoriteViewModel.favoriteState.collect{ favoriteState ->
+            favoriteViewModel.favoriteState.collect { favoriteState ->
                 favoriteAdapter.updateList(favoriteState.favoritesUserList)
             }
         }
@@ -55,7 +72,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFavoriteBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 }
