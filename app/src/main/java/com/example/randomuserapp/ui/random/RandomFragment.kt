@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.randomuserapp.databinding.FragmentRandomBinding
 import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.ui.favorite.FavoriteViewModel
+import com.example.randomuserapp.ui.favorite.adapter.FavoriteAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,7 @@ class RandomFragment : Fragment() {
     private val randomUserViewModel by viewModels<RandomUserViewModel>()
     private val favoriteViewModel by viewModels<FavoriteViewModel>()
 
+    private lateinit var favoritesAdapter: FavoriteAdapter
     private var _binding: FragmentRandomBinding? = null
     private val binding get() = _binding!!
 
@@ -36,12 +38,17 @@ class RandomFragment : Fragment() {
         handleState()
     }
 
+    private fun initList(list: List<RandomUserModel>) {
+        favoritesAdapter = FavoriteAdapter(list, requireContext())
+    }
+
     private fun handleState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 randomUserViewModel.state.collect { randomState ->
                     handleProgressBarBehaviour(randomState.loading)
                     bindData(randomState.favoriteUser)
+                    initList(randomState.favoritesUserList)
                 }
             }
         }
@@ -53,16 +60,13 @@ class RandomFragment : Fragment() {
         }
 
         binding.btnAddUser.setOnClickListener {
-            Log.d("patri", "add user clicked")
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     randomUserViewModel.state.collect { randomState ->
-                        Log.d("patri", randomState.toString())
                         favoriteViewModel.insertFavoriteUser(randomState.favoriteUser)
                     }
                 }
             }
-            favoriteViewModel.getFavoriteList()
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.randomuserapp.ui.favorite
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,13 +31,23 @@ class FavoriteFragment : Fragment() {
 
     private fun initUI(){
         initFavoriteList()
+        updateList()
     }
 
     private fun initFavoriteList() {
         favoriteAdapter = FavoriteAdapter(emptyList(), requireContext())
         binding.rvFavorites.apply {
-            layoutManager = GridLayoutManager(context,2)
+            layoutManager = GridLayoutManager(context,1)
             adapter = favoriteAdapter
+        }
+    }
+
+    private fun updateList() {
+        lifecycleScope.launch {
+            favoriteViewModel.favoriteState.collect{ favoriteState ->
+                Log.d("patri", "estoy en updateList: ${favoriteState.favoritesUserList.toString()})")
+                favoriteAdapter.updateList(favoriteState.favoritesUserList)
+            }
         }
     }
 

@@ -13,7 +13,7 @@ class RandomUserRepositoryImpl @Inject constructor(
     private val favoriteRandomUserLocalDataSource: FavoriteRandomUserLocalDataSource
 ) : RandomUserRepository {
 
-    override val favoriteUser = favoriteRandomUserLocalDataSource.favoriteRandomUser
+    override val favoriteUserList = favoriteRandomUserLocalDataSource.favoriteRandomUserList
 
     override suspend fun getRandomUserFromApi(): RandomUserModel {
         return randomUserRemoteDataSource.getRandomUserFromApi()

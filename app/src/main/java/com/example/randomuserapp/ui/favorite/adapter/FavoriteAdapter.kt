@@ -8,7 +8,7 @@ import com.example.randomuserapp.R
 import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.ui.favorite.FavoriteViewModel
 
-class FavoriteAdapter(private var favoriteList: List<RandomUserModel> = emptyList(),
+class FavoriteAdapter(private var favoriteList: List<RandomUserModel>,
     private val myContext: Context) :
     RecyclerView.Adapter<FavoriteViewHolder>() {
 

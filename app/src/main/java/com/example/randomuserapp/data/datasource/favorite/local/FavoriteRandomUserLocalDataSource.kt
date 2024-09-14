@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoriteRandomUserLocalDataSource {
 
-    val favoriteRandomUser: Flow<RandomUserModel>
+    val favoriteRandomUserList: Flow<List<RandomUserModel>>
 
     suspend fun save(favoriteRandomUser: RandomUserModel)
 

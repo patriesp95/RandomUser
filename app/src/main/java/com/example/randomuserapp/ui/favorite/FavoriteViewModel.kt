@@ -25,18 +25,15 @@ class FavoriteViewModel @Inject constructor(
     val favoriteState: StateFlow<UiState> = _favoriteState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            getFavoriteRandomUserUseCase().collect { favoriteUser ->
-                _favoriteState.update { UiState(favoriteUser = favoriteUser) }
-            }
-        }
         getFavoriteList()
     }
 
-    fun getFavoriteList() {
+    private fun getFavoriteList() {
         viewModelScope.launch {
             _favoriteState.value = _favoriteState.value.copy(loading = true)
-            getFavoriteRandomUserUseCase()
+            getFavoriteRandomUserUseCase().collect { favoriteUserList ->
+                _favoriteState.update { UiState(favoritesUserList = favoriteUserList) }
+            }
             _favoriteState.value = _favoriteState.value.copy(loading = false)
         }
     }

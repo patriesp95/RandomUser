@@ -2,6 +2,7 @@ package com.example.randomuserapp.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.example.randomuserapp.data.network.response.RandomUser
 import com.example.randomuserapp.domain.model.RandomUserModel
 
 @Entity(tableName = "favorite_user_table", primaryKeys = ["name", "image", "country"])
@@ -17,4 +18,15 @@ fun RandomUserEntity.entityToDomain(): RandomUserModel {
         name = name,
         country = country
     )
+}
+
+fun List<RandomUserEntity>.entityToDomain(): List<RandomUserModel> {
+    val myList = this.map {
+        RandomUserModel(
+            image = it.image,
+            name = it.name,
+            country = it.country
+        )
+    }
+    return myList
 }

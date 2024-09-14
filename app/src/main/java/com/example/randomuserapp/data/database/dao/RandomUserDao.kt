@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RandomUserDao {
     @Query("SELECT * FROM favorite_user_table ORDER BY country DESC")
-    fun getAllFavoriteUsers(): Flow<RandomUserEntity>
+    fun getAllFavoriteUsers(): Flow<List<RandomUserEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(users: RandomUserEntity)

@@ -1,5 +1,6 @@
 package com.example.randomuserapp.data.datasource.favorite.local
 
+import android.util.Log
 import com.example.randomuserapp.data.database.dao.RandomUserDao
 import com.example.randomuserapp.data.database.entities.entityToDomain
 import com.example.randomuserapp.domain.model.RandomUserModel
@@ -11,10 +12,8 @@ import javax.inject.Inject
 class FavoriteRandomUserLocalDataSourceImpl @Inject constructor(private val dao: RandomUserDao) :
     FavoriteRandomUserLocalDataSource {
 
-    override val favoriteRandomUser: Flow<RandomUserModel> =
-        dao.getAllFavoriteUsers().map {
-            it.entityToDomain()
-        }
+    override val favoriteRandomUserList: Flow<List<RandomUserModel>> =
+        dao.getAllFavoriteUsers().map { it.entityToDomain() }
 
     override suspend fun save(favoriteRandomUser: RandomUserModel) {
         dao.insertAll(favoriteRandomUser.toDatabase())
