@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.randomuserapp.databinding.FragmentFavoriteBinding
 import com.example.randomuserapp.ui.favorite.adapter.FavoriteAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +38,7 @@ class FavoriteFragment : Fragment() {
     private fun initFavoriteList() {
         favoriteAdapter = FavoriteAdapter(emptyList(), requireContext())
         binding.rvFavorites.apply {
-            layoutManager = GridLayoutManager(context,1)
+            layoutManager = LinearLayoutManager(context)
             adapter = favoriteAdapter
         }
     }
@@ -45,7 +46,6 @@ class FavoriteFragment : Fragment() {
     private fun updateList() {
         lifecycleScope.launch {
             favoriteViewModel.favoriteState.collect{ favoriteState ->
-                Log.d("patri", "estoy en updateList: ${favoriteState.favoritesUserList.toString()})")
                 favoriteAdapter.updateList(favoriteState.favoritesUserList)
             }
         }
