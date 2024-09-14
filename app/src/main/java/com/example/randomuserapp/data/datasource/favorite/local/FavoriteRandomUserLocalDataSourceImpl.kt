@@ -11,15 +11,13 @@ import javax.inject.Inject
 class FavoriteRandomUserLocalDataSourceImpl @Inject constructor(private val dao: RandomUserDao) :
     FavoriteRandomUserLocalDataSource {
 
-    override val favoriteRandomUsersList: Flow<List<RandomUserModel>> =
+    override val favoriteRandomUser: Flow<RandomUserModel> =
         dao.getAllFavoriteUsers().map {
             it.entityToDomain()
         }
 
-    override fun isEmpty(): Boolean = dao.favoriteUserCount() == 0
-
-    override suspend fun save(favoriteRandomUsersList: List<RandomUserModel>) {
-        dao.insertAll(favoriteRandomUsersList.toDatabase())
+    override suspend fun save(favoriteRandomUser: RandomUserModel) {
+        dao.insertAll(favoriteRandomUser.toDatabase())
     }
 
     override suspend fun clear() {

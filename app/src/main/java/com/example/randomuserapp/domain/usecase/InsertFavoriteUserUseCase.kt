@@ -6,6 +6,6 @@ import com.example.randomuserapp.domain.model.toDatabase
 import javax.inject.Inject
 
 class InsertFavoriteUserUseCase @Inject constructor(private val randomUserRepository: RandomUserRepository) {
-    suspend operator fun invoke(favoriteUsersList: List<RandomUserModel>) =
-        randomUserRepository.insertRandomFavoriteUser(favoriteUsers = favoriteUsersList.toDatabase())
+    suspend operator fun invoke(favoriteUser: RandomUserModel) =
+        randomUserRepository.insertRandomFavoriteUser(favoriteUser = favoriteUser.toDatabase())
 }

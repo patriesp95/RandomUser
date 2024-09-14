@@ -6,9 +6,6 @@ import com.example.randomuserapp.data.datasource.favorite.local.FavoriteRandomUs
 import com.example.randomuserapp.data.datasource.random.remote.RandomUserRemoteDataSource
 import com.example.randomuserapp.domain.RandomUserRepository
 import com.example.randomuserapp.domain.model.RandomUserModel
-import com.example.randomuserapp.domain.model.toDatabase
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RandomUserRepositoryImpl @Inject constructor(
@@ -16,18 +13,18 @@ class RandomUserRepositoryImpl @Inject constructor(
     private val favoriteRandomUserLocalDataSource: FavoriteRandomUserLocalDataSource
 ) : RandomUserRepository {
 
-    override val favoriteUserList = favoriteRandomUserLocalDataSource.favoriteRandomUsersList
+    override val favoriteUser = favoriteRandomUserLocalDataSource.favoriteRandomUser
 
-    override suspend fun getRandomUserFromApi(): List<RandomUserModel> {
+    override suspend fun getRandomUserFromApi(): RandomUserModel {
         return randomUserRemoteDataSource.getRandomUserFromApi()
     }
 
-    override suspend fun insertRandomFavoriteUser(favoriteUsers: List<RandomUserEntity>) {
-        favoriteRandomUserLocalDataSource.save(favoriteUsers.entityToDomain())
+    override suspend fun insertRandomFavoriteUser(favoriteUser: RandomUserEntity) {
+        favoriteRandomUserLocalDataSource.save(favoriteUser.entityToDomain())
     }
 
     override suspend fun clearRandomFavoriteUser() {
-        TODO("Not yet implemented")
+        favoriteRandomUserLocalDataSource.clear()
     }
 }
 

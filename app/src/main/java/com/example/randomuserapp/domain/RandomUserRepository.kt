@@ -5,8 +5,8 @@ import com.example.randomuserapp.domain.model.RandomUserModel
 import kotlinx.coroutines.flow.Flow
 
 interface RandomUserRepository {
-    val favoriteUserList: Flow<List<RandomUserModel>>
-    suspend fun getRandomUserFromApi(): List<RandomUserModel>
-    suspend fun insertRandomFavoriteUser(favoriteUsers: List<RandomUserEntity>)
+    val favoriteUser: Flow<RandomUserModel>
+    suspend fun getRandomUserFromApi(): RandomUserModel
+    suspend fun insertRandomFavoriteUser(favoriteUser: RandomUserEntity)
     suspend fun clearRandomFavoriteUser()
 }

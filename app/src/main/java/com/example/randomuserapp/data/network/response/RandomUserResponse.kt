@@ -7,12 +7,10 @@ data class RandomUserResponse(
     @SerializedName("results") val results: List<RandomUser>
 )
 
-fun RandomUserResponse.responseToDomain(): List<RandomUserModel> {
-    return listOf(
-        RandomUserModel(
-            image = this.results[0].picture.large,
-            name = "${this.results[0].name.first} ${this.results[0].name.last}",
-            country = this.results[0].location.country
-        )
+fun RandomUserResponse.responseToDomain(): RandomUserModel {
+    return RandomUserModel(
+        image = results[0].picture.large,
+        name = "${results[0].name.first} ${results[0].name.last}",
+        country = results[0].location.country
     )
 }

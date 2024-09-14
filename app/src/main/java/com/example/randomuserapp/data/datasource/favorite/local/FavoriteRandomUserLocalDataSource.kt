@@ -5,11 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavoriteRandomUserLocalDataSource {
 
-    val favoriteRandomUsersList: Flow<List<RandomUserModel>>
+    val favoriteRandomUser: Flow<RandomUserModel>
 
-    fun isEmpty(): Boolean
-
-    suspend fun save(favoriteRandomUsersList: List<RandomUserModel>)
+    suspend fun save(favoriteRandomUser: RandomUserModel)
 
     suspend fun clear()
 }

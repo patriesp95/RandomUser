@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 class RandomUserRemoteDataSourceImpl @Inject constructor(private val apiService: RandomUserApiService) :
     RandomUserRemoteDataSource {
-    override suspend fun getRandomUserFromApi(): List<RandomUserModel> {
+
+    override suspend fun getRandomUserFromApi(): RandomUserModel {
         return apiService.getUser().responseToDomain()
     }
 }

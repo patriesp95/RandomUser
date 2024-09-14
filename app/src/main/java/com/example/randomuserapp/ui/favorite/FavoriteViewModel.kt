@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.domain.usecase.GetFavoriteRandomUserUseCase
 import com.example.randomuserapp.domain.usecase.InsertFavoriteUserUseCase
+import com.example.randomuserapp.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,8 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(private val getFavoriteRandomUserUseCase: GetFavoriteRandomUserUseCase,
-    private val insertFavoriteUserUseCase: InsertFavoriteUserUseCase
+class FavoriteViewModel @Inject constructor(
+    private val getFavoriteRandomUserUseCase: GetFavoriteRandomUserUseCase,
+    private val insertFavoriteUserUseCase: InsertFavoriteUserUseCase,
 ) :
     ViewModel() {
 
@@ -23,28 +25,25 @@ class FavoriteViewModel @Inject constructor(private val getFavoriteRandomUserUse
     val favoriteState: StateFlow<UiState> = _favoriteState.asStateFlow()
 
     init {
-        viewModelScope.launch{
-            getFavoriteRandomUserUseCase().collect{ favoriteUserList ->
-                _favoriteState.update{ UiState(favoriteUserList = favoriteUserList)}
+        viewModelScope.launch {
+            getFavoriteRandomUserUseCase().collect { favoriteUser ->
+                _favoriteState.update { UiState(favoriteUser = favoriteUser) }
             }
         }
         getFavoriteList()
     }
 
     fun getFavoriteList() {
-        viewModelScope.launch{
+        viewModelScope.launch {
             _favoriteState.value = _favoriteState.value.copy(loading = true)
             getFavoriteRandomUserUseCase()
             _favoriteState.value = _favoriteState.value.copy(loading = false)
         }
     }
 
-    suspend fun insertFavoriteUser(favoriteUserList: List<RandomUserModel>) {
-        insertFavoriteUserUseCase(favoriteUserList)
+    suspend fun insertFavoriteUser(favoriteUser: RandomUserModel?) {
+        if (favoriteUser != null) {
+            insertFavoriteUserUseCase(favoriteUser)
+        }
     }
-
-    data class UiState(
-        val loading: Boolean = false,
-        val favoriteUserList: List<RandomUserModel>? = null
-    )
 }

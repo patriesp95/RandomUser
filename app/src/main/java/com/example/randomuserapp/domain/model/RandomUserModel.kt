@@ -8,12 +8,10 @@ data class RandomUserModel(
     val country: String
 )
 
-fun List<RandomUserModel>.toDatabase(): List<RandomUserEntity> {
-    return listOf(
-        RandomUserEntity(
-            image = this[0].image,
-            name = this[0].name,
-            country = this[0].country
-        )
+fun RandomUserModel.toDatabase(): RandomUserEntity {
+    return RandomUserEntity(
+        image = image,
+        name = name,
+        country = country
     )
 }

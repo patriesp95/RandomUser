@@ -2,11 +2,11 @@ package com.example.randomuserapp.ui.random
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -33,27 +33,15 @@ class RandomFragment : Fragment() {
 
     private fun initUI() {
         initListeners()
-        initUIState()
-        handleLoadingState()
+        handleState()
     }
 
-    private fun handleLoadingState(){
+    private fun handleState() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                randomUserViewModel.loading.collect {
-                    handleProgressBarBehaviour(it)
-                }
-            }
-        }
-    }
-
-    private fun initUIState() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                randomUserViewModel.state.collect { result ->
-                    if (!result.isNullOrEmpty()) {
-                        bindData(result)
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                randomUserViewModel.state.collect { randomState ->
+                    handleProgressBarBehaviour(randomState.loading)
+                    bindData(randomState.favoriteUser)
                 }
             }
         }
@@ -61,17 +49,16 @@ class RandomFragment : Fragment() {
 
     private fun initListeners() {
         binding.btnNextUser.setOnClickListener {
-            randomUserViewModel.getRandomUser()
+            this.randomUserViewModel.getRandomUser()
         }
 
         binding.btnAddUser.setOnClickListener {
-            Log.d("patri","add user clicked")
+            Log.d("patri", "add user clicked")
             lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED){
-                    favoriteViewModel.favoriteState.collect { result ->
-                        if (!result.favoriteUserList.isNullOrEmpty()) {
-                            favoriteViewModel.insertFavoriteUser(result.favoriteUserList)
-                        }
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    randomUserViewModel.state.collect { randomState ->
+                        Log.d("patri", randomState.toString())
+                        favoriteViewModel.insertFavoriteUser(randomState.favoriteUser)
                     }
                 }
             }
@@ -80,11 +67,12 @@ class RandomFragment : Fragment() {
     }
 
     private fun handleProgressBarBehaviour(isLoading: Boolean) {
-        when(isLoading){
+        when (isLoading) {
             true -> {
                 binding.progressBar.isVisible = true
                 binding.userData.visibility = View.GONE
             }
+
             false -> {
                 binding.progressBar.isVisible = false
                 binding.userData.visibility = View.VISIBLE
@@ -92,10 +80,12 @@ class RandomFragment : Fragment() {
         }
     }
 
-    private fun bindData(result: List<RandomUserModel>) {
-        loadImage(result[0].image)
-        binding.tvName.text = result[0].name
-        binding.tvCountry.text = result[0].country
+    private fun bindData(user: RandomUserModel?) {
+        user?.let {
+            loadImage(it.image)
+            binding.tvName.text = it.name
+            binding.tvCountry.text = it.country
+        }
     }
 
     private fun loadImage(image: String) {
