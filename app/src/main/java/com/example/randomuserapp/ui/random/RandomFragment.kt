@@ -66,6 +66,15 @@ class RandomFragment : Fragment() {
 
         binding.btnAddUser.setOnClickListener {
             Log.d("patri","add user clicked")
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED){
+                    favoriteViewModel.favoriteState.collect { result ->
+                        if (!result.favoriteUserList.isNullOrEmpty()) {
+                            favoriteViewModel.insertFavoriteUser(result.favoriteUserList)
+                        }
+                    }
+                }
+            }
             favoriteViewModel.getFavoriteList()
         }
     }

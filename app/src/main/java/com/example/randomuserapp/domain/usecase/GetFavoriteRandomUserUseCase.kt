@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetFavoriteRandomUserUseCase @Inject constructor(private val randomUserRepository: RandomUserRepository) {
 
-    suspend operator fun invoke() = randomUserRepository.favoriteUserList
+    operator fun invoke() = randomUserRepository.favoriteUserList
 
 }
