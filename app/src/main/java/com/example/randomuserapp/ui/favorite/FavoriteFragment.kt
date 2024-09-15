@@ -1,6 +1,7 @@
 package com.example.randomuserapp.ui.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,5 +84,10 @@ class FavoriteFragment : Fragment() {
     ): View? {
         _binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

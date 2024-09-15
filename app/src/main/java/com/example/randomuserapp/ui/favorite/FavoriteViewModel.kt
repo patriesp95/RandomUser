@@ -1,5 +1,6 @@
 package com.example.randomuserapp.ui.favorite
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomuserapp.domain.model.RandomUserModel
@@ -8,6 +9,7 @@ import com.example.randomuserapp.domain.usecase.GetFavoriteRandomUserUseCase
 import com.example.randomuserapp.domain.usecase.InsertFavoriteUserUseCase
 import com.example.randomuserapp.ui.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,17 +34,13 @@ class FavoriteViewModel @Inject constructor(
 
     private fun getFavoriteList() {
         viewModelScope.launch {
-            _favoriteState.value = _favoriteState.value.copy(loading = true)
             getFavoriteRandomUserUseCase().collect { favoriteUserList ->
-                _favoriteState.update { UiState(favoritesUserList = favoriteUserList) }
+                _favoriteState.value = _favoriteState.value.copy(
+                    loading = false,
+                    favoriteUser = null,
+                    favoritesUserList = favoriteUserList
+                )
             }
-            _favoriteState.value = _favoriteState.value.copy(loading = false)
-        }
-    }
-
-    suspend fun insertFavoriteUser(favoriteUser: RandomUserModel?) {
-        if (favoriteUser != null) {
-            insertFavoriteUserUseCase(favoriteUser)
         }
     }
 

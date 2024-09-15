@@ -50,12 +50,15 @@ android {
 dependencies {
     val navVersion = "2.7.7"
     val room_version = "2.6.1"
+    val lifecycle_version = "2.8.5"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
