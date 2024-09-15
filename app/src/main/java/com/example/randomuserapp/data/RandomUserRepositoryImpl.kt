@@ -23,8 +23,12 @@ class RandomUserRepositoryImpl @Inject constructor(
         favoriteRandomUserLocalDataSource.save(favoriteUser.entityToDomain())
     }
 
-    override suspend fun clearRandomFavoriteUser() {
+    override suspend fun clearRandomFavoriteUsers() {
         favoriteRandomUserLocalDataSource.clear()
+    }
+
+    override fun clearRandomFavoriteUser(favoriteUser: RandomUserEntity) {
+        favoriteRandomUserLocalDataSource.deleteUser(favoriteUser.entityToDomain())
     }
 }
 

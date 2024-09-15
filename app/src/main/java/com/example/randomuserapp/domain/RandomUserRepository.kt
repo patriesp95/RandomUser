@@ -8,5 +8,6 @@ interface RandomUserRepository {
     val favoriteUserList: Flow<List<RandomUserModel>>
     suspend fun getRandomUserFromApi(): RandomUserModel
     suspend fun insertRandomFavoriteUser(favoriteUser: RandomUserEntity)
-    suspend fun clearRandomFavoriteUser()
+    suspend fun clearRandomFavoriteUsers()
+    fun clearRandomFavoriteUser(favoriteUser: RandomUserEntity)
 }

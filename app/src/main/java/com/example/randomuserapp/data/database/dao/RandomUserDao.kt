@@ -17,4 +17,7 @@ interface RandomUserDao {
 
     @Query("DELETE FROM favorite_user_table")
     suspend fun deleteAllRandomFavoriteUsers()
+
+    @Query("DELETE FROM favorite_user_table WHERE image =:image and name =:name and country=:country")
+    fun deleteRandomFavoriteUser(image: String, name: String, country: String)
 }

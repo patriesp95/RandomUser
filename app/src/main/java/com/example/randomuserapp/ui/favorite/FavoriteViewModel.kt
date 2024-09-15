@@ -3,6 +3,7 @@ package com.example.randomuserapp.ui.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomuserapp.domain.model.RandomUserModel
+import com.example.randomuserapp.domain.usecase.DeleteFavoriteUserUseCase
 import com.example.randomuserapp.domain.usecase.GetFavoriteRandomUserUseCase
 import com.example.randomuserapp.domain.usecase.InsertFavoriteUserUseCase
 import com.example.randomuserapp.ui.state.UiState
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val getFavoriteRandomUserUseCase: GetFavoriteRandomUserUseCase,
     private val insertFavoriteUserUseCase: InsertFavoriteUserUseCase,
+    private val deleteFavoriteUserUseCase: DeleteFavoriteUserUseCase
 ) :
     ViewModel() {
 
@@ -42,5 +44,9 @@ class FavoriteViewModel @Inject constructor(
         if (favoriteUser != null) {
             insertFavoriteUserUseCase(favoriteUser)
         }
+    }
+
+    fun deleteFavoriteUser(favoriteUser: RandomUserModel){
+        deleteFavoriteUserUseCase(favoriteUser)
     }
 }

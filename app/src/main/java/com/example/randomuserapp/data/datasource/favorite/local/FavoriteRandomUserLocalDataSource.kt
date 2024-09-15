@@ -10,4 +10,6 @@ interface FavoriteRandomUserLocalDataSource {
     suspend fun save(favoriteRandomUser: RandomUserModel)
 
     suspend fun clear()
+
+    fun deleteUser(favoriteRandomUser: RandomUserModel)
 }

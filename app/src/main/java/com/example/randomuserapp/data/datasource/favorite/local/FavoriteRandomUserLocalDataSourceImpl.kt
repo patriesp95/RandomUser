@@ -1,6 +1,5 @@
 package com.example.randomuserapp.data.datasource.favorite.local
 
-import android.util.Log
 import com.example.randomuserapp.data.database.dao.RandomUserDao
 import com.example.randomuserapp.data.database.entities.entityToDomain
 import com.example.randomuserapp.domain.model.RandomUserModel
@@ -22,5 +21,14 @@ class FavoriteRandomUserLocalDataSourceImpl @Inject constructor(private val dao:
     override suspend fun clear() {
         dao.deleteAllRandomFavoriteUsers()
     }
+
+    override fun deleteUser(favoriteRandomUser: RandomUserModel) {
+        dao.deleteRandomFavoriteUser(
+            favoriteRandomUser.image,
+            favoriteRandomUser.name,
+            favoriteRandomUser.country
+        )
+    }
+
 
 }

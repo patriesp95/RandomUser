@@ -13,4 +13,5 @@
 
     <!-- Favorite Fragment -->
     <string name="filter">Filter by name</string>
+    <string name="delete">DELETE</string>
 </resources>

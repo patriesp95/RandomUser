@@ -32,6 +32,13 @@ class FavoriteFragment : Fragment() {
         initFilter()
         initFavoriteList()
         updateList()
+        initDeleteUserFunctionality()
+    }
+
+    private fun initDeleteUserFunctionality() {
+//        binding.btnDeleteUser.setOnClickListener {
+//            this.randomUserViewModel.getRandomUser()
+//        }
     }
 
     private fun initFilter() {
