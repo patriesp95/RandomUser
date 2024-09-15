@@ -13,6 +13,7 @@ import com.example.randomuserapp.databinding.FragmentFavoriteBinding
 import com.example.randomuserapp.domain.model.RandomUserModel
 import com.example.randomuserapp.ui.favorite.adapter.FavoriteAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,13 +33,6 @@ class FavoriteFragment : Fragment() {
         initFilter()
         initFavoriteList()
         updateList()
-        initDeleteUserFunctionality()
-    }
-
-    private fun initDeleteUserFunctionality() {
-//        binding.btnDeleteUser.setOnClickListener {
-//            this.randomUserViewModel.getRandomUser()
-//        }
     }
 
     private fun initFilter() {
@@ -60,10 +54,18 @@ class FavoriteFragment : Fragment() {
 
 
     private fun initFavoriteList() {
-        favoriteAdapter = FavoriteAdapter(emptyList(), requireContext())
+        favoriteAdapter = FavoriteAdapter(emptyList(), onClickDelete = { randomUser ->
+            onDeletedItem(randomUser)
+        })
         binding.rvFavorites.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteAdapter
+        }
+    }
+
+    private fun onDeletedItem(randomUser: RandomUserModel) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            favoriteViewModel.deleteFavoriteUser(randomUser)
         }
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,7 +23,6 @@ class RandomFragment : Fragment() {
     private val randomUserViewModel by viewModels<RandomUserViewModel>()
     private val favoriteViewModel by viewModels<FavoriteViewModel>()
 
-    private lateinit var favoritesAdapter: FavoriteAdapter
     private var _binding: FragmentRandomBinding? = null
     private val binding get() = _binding!!
 
@@ -38,9 +36,11 @@ class RandomFragment : Fragment() {
         handleState()
     }
 
-    private fun initList(list: List<RandomUserModel>) {
-        favoritesAdapter = FavoriteAdapter(list, requireContext())
-    }
+//    private fun initList(list: List<RandomUserModel>) {
+//        favoritesAdapter = FavoriteAdapter(list,  onClickDelete = { image: String, name: String, country: String ->
+//            favoriteViewModel.onDeletedItem(image,name,country)
+//        })
+//    }
 
     private fun handleState() {
         lifecycleScope.launch {
@@ -48,7 +48,7 @@ class RandomFragment : Fragment() {
                 randomUserViewModel.state.collect { randomState ->
                     handleProgressBarBehaviour(randomState.loading)
                     bindData(randomState.favoriteUser)
-                    initList(randomState.favoritesUserList)
+                    //initList(randomState.favoritesUserList)
                 }
             }
         }
