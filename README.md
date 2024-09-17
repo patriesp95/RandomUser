@@ -19,7 +19,7 @@ I'm a young mobile developer mainly interested in Android although I am currentl
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/patricia-martinez-espert-7470291a7/)
 
 ## Branches
-Room [https://github.com/patriesp95/RandomUser/tree/room]
+[Room](https://github.com/patriesp95/RandomUser/tree/room)
 
 ## Installation
 
